@@ -2,9 +2,9 @@
   "BagIt-Profile-Info":{
     "BagIt-Profile-Identifier":"https://apirocet.github.io/poetryfoundation/bagit-profile-poetryfoundation-v1.0.json",
     "Source-Organization":"Poetry Foundation",
-    "Contact-Name":"Dan Hoefler",
-    "Contact-Phone":"+1 (312) 787-7070",
-    "Contact-Email":"dhoefler@poetryfoundation.org",
+    "Contact-Name":"Harlan Wallach",
+    "Contact-Phone":"+1 (312) 799-8046",
+    "Contact-Email":"hwallach@poetryfoundation.org",
     "External-Description":"BagIt Profile for packaging audio podcasts",
     "Version":"1.0",
     "BagIt-Profile-Version":"1.3.0"
@@ -25,19 +25,19 @@
     "Contact-Name":{
       "required":true,
       "values":[
-        "Dan Hoefler"
+        "Harlan Wallach"
       ]
     },
     "Contact-Phone":{
       "required":true,
       "values":[
-        "+1 (312) 787-7070"
+        "+1 (312) 799-8046"
       ]
     },
     "Contact-Email":{
       "required":true,
       "values":[
-        "dhoefler@poetryfoundation.org"
+        "hwallach@poetryfoundation.org"
       ]
     },
     "External-Description":{
