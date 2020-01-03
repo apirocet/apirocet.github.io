@@ -46,6 +46,11 @@
         "Audio podcasts created by the Poetry Foundation"
       ]
     },
+    "External-Identifier":{
+      "required":true,
+      "repeatable":false,
+      "description":"UUID of the object"
+    },
     "Bagging-Date":{
       "required":true
     },
