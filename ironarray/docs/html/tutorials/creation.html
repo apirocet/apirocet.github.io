@@ -1,0 +1,798 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting started &#8212; ironArray for Python 1.0.0-beta.1 documentation</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../_static/ironArray_logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Statistical distributions" href="random.html" />
+    <link rel="prev" title="Tutorials" href="../tutorials.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../index.html">
+    
+      <img src="../_static/ironArray.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../intro.html">Introduction</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../install.html">Installation</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../reference.html">Library Reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../config.html">Configuring ironArray</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+          
+            
+                <li class="active">
+                    <a href="">Getting started</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="random.html">Statistical distributions</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="views.html">Slicing and Views</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="matmul.html">Matrix multiplication</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="reductions.html">Reductions</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-memory.html">Expression Evaluation (In-Memory)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-disk.html">Expression Evaluation (On-Disk)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="error-handling.html">Error handling</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#Array-creation" class="nav-link">Array creation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Creation-Properties" class="nav-link">Creation Properties</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#More-Properties" class="nav-link">More Properties</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Global-Configuration" class="nav-link">Global Configuration</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Contextual-Configuration" class="nav-link">Contextual Configuration</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Getting-started">
+<h1>Getting started<a class="headerlink" href="#Getting-started" title="Permalink to this headline">¶</a></h1>
+<p><em>ironArray</em> for Python is a package that implements a multi-dimensional, compressed data container and a computational engine optimized for operating with large arrays.</p>
+<p>In this tutorial we will cover creating and manipulating <em>ironArray</em> arrays.</p>
+<div class="section" id="Array-creation">
+<h2>Array creation<a class="headerlink" href="#Array-creation" title="Permalink to this headline">¶</a></h2>
+<p>In this first section, we will see how to create the main object of the library, the <em>ironArray</em> arrays, and how to specify different properties into it. Let’s start by creating a simple array:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">iarray</span> <span class="k">as</span> <span class="nn">ia</span>
+
+<span class="n">dtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">dtshape</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;IArray (5, 5) np.float64&gt;
+</pre></div></div>
+</div>
+<p>Voilà, we have created our first ironArray array in <code class="docutils literal notranslate"><span class="pre">arr</span></code>.</p>
+<p>In order to create the array we have specified the shape and data type of the array within a <code class="docutils literal notranslate"><span class="pre">DTShape</span></code> dataclass. Then we have called the <code class="docutils literal notranslate"><span class="pre">linspace</span></code> constructor, where you specify the <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">stop</span></code> values. In general, ironArray uses the same names for functions than NumPy, so you can always check the excellent docs in NumPy so as to get more info.</p>
+<p>Right now, ironArray arrays only support two data types, <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code>. This is an indication of how it is geared towards handling numerical data, as many of the ironArray internal optimizations rely on using floating point datasets. In addition, and thanks to <code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits</span></code> property, you can use any precision between 1 and 64 bit floats and the compression engine will be in charge of getting rid of the unnecessary storage.</p>
+<p>But let’s go back to our example and let’s inspect the data of the array by converting it into a NumPy array:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ia</span><span class="o">.</span><span class="n">iarray2numpy</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[-1.        , -0.91666667, -0.83333333, -0.75      , -0.66666667],
+       [-0.58333333, -0.5       , -0.41666667, -0.33333333, -0.25      ],
+       [-0.16666667, -0.08333333,  0.        ,  0.08333333,  0.16666667],
+       [ 0.25      ,  0.33333333,  0.41666667,  0.5       ,  0.58333333],
+       [ 0.66666667,  0.75      ,  0.83333333,  0.91666667,  1.        ]])
+</pre></div></div>
+</div>
+<div class="section" id="Creation-Properties">
+<h3>Creation Properties<a class="headerlink" href="#Creation-Properties" title="Permalink to this headline">¶</a></h3>
+<p>Besides the shape and data type, we can set more properties in the array. For example, let’s create it persistently:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pers_arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">dtshape</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">urlpath</span><span class="o">=</span><span class="s2">&quot;myarr.iarr&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre>
+<span></span>%%bash
+ls -l myarr.iarr
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-rw-r--r-- 1 faltet faltet 606 Jan 20 11:02 myarr.iarr
+</pre></div></div>
+</div>
+<p>and we can open it from disk too:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">arr2</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;myarr.iarr&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[-1.         -0.91666667 -0.83333333 -0.75       -0.66666667]
+ [-0.58333333 -0.5        -0.41666667 -0.33333333 -0.25      ]
+ [-0.16666667 -0.08333333  0.          0.08333333  0.16666667]
+ [ 0.25        0.33333333  0.41666667  0.5         0.58333333]
+ [ 0.66666667  0.75        0.83333333  0.91666667  1.        ]]
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">urlpath</span></code> parameter can be used along with many others in the <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">store</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
+</pre></div></div>
+</div>
+<p>For clarity, we can also group them in an Storage instance. For example, the next <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object indicates the shape of both the chunks and the blocks:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">(</span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Let’s use this Storage property to create a slightly larger array, more appropiate for ironArray usage:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">((</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">7000</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">storage</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">(</span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">urlpath</span><span class="o">=</span><span class="s2">&quot;large_arr.iarr&quot;</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">dtshape</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">storage</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre>
+<span></span>%%bash
+ls -lh large_arr.iarr
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-rw-r--r-- 1 faltet faltet 103M Jan 20 11:02 large_arr.iarr
+</pre></div></div>
+</div>
+<p>in this case, we have created an array of about 530 MB, but thanks to integrated compression, it takes just less than 5x the storage space. Contrarily to ordinary chunked and compressed data container libraries that supports just 1 level of data partitioning (HDF5, Zarr…), ironArray allows for 2 levels: chunks and blocks. This has important impact in the performance of modern computer architectures. But don’t get too fast for now; more on that later.</p>
+</div>
+<div class="section" id="More-Properties">
+<h3>More Properties<a class="headerlink" href="#More-Properties" title="Permalink to this headline">¶</a></h3>
+<p>When creating arrays, ironArray lets you specify many other parameters such as compression related ones:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">((</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">7000</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">storage</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">(</span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">urlpath</span><span class="o">=</span><span class="s2">&quot;large_arr2.iarr&quot;</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">dtshape</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">storage</span><span class="p">,</span> <span class="n">clevel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">codec</span><span class="o">=</span><span class="n">ia</span><span class="o">.</span><span class="n">Codecs</span><span class="o">.</span><span class="n">ZSTD</span><span class="p">,</span> <span class="n">fp_mantissa_bits</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre>
+<span></span>%%bash
+ls -lh large_arr2.iarr
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+-rw-r--r-- 1 faltet faltet 31M Jan 20 11:02 large_arr2.iarr
+</pre></div></div>
+</div>
+<p>So, in this case the space required to store the array is much less than before mainly due to two reasons:</p>
+<ol class="arabic simple">
+<li><p>We are using a better codec for compression (ZSTD).</p></li>
+<li><p>We are requiring just 30 significant bits in the mantissa, improving the compression ratio.</p></li>
+</ol>
+<p>You can see the complete set of supported arguments, as well as looking at its defaults, by printing an instance of <code class="docutils literal notranslate"><span class="pre">ia.Config</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Config</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Config(codec=&lt;Codecs.LZ4: 1&gt;, clevel=5, filters=[&lt;Filters.SHUFFLE: 1&gt;], fp_mantissa_bits=0, use_dict=False, nthreads=28, eval_method=&lt;Eval.AUTO: 1&gt;, seed=1, random_gen=&lt;RandomGen.MERSENNE_TWISTER: 0&gt;, storage=Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False), chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
+</pre></div></div>
+</div>
+<p>Of course, specifying all the compression and storage related arguments for every call in ironArray can get boring pretty quickly. For avoid this you can either modify the global configuration defaults, or doing so with a context.</p>
+</div>
+<div class="section" id="Global-Configuration">
+<h3>Global Configuration<a class="headerlink" href="#Global-Configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you are going to use the same configuration parameters in your script, it might be a good idea to change the global parameters:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ia</span><span class="o">.</span><span class="n">set_config</span><span class="p">(</span><span class="n">codec</span><span class="o">=</span><span class="n">ia</span><span class="o">.</span><span class="n">Codecs</span><span class="o">.</span><span class="n">ZSTD</span><span class="p">,</span> <span class="n">clevel</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Config(codec=&lt;Codecs.ZSTD: 5&gt;, clevel=1, filters=[&lt;Filters.SHUFFLE: 1&gt;], fp_mantissa_bits=0, use_dict=False, nthreads=28, eval_method=&lt;Eval.AUTO: 1&gt;, seed=1, random_gen=&lt;RandomGen.MERSENNE_TWISTER: 0&gt;, storage=Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False), chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
+</pre></div></div>
+</div>
+<p>After doing that, the defaults for the global configuration changed:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cfg</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Config</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Config(codec=&lt;Codecs.ZSTD: 5&gt;, clevel=1, filters=[&lt;Filters.SHUFFLE: 1&gt;], fp_mantissa_bits=0, use_dict=False, nthreads=28, eval_method=&lt;Eval.AUTO: 1&gt;, seed=1, random_gen=&lt;RandomGen.MERSENNE_TWISTER: 0&gt;, storage=Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False), chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
+</pre></div></div>
+</div>
+<p>and from then on, these will be the defaults for <em>all</em> the functions that are called in your script.</p>
+</div>
+<div class="section" id="Contextual-Configuration">
+<h3>Contextual Configuration<a class="headerlink" href="#Contextual-Configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you don’t want to mess with your global configuration, <code class="docutils literal notranslate"><span class="pre">ia.config</span></code> context comes handy:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">dtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">([</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">])</span>
+<span class="k">with</span> <span class="n">ia</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">clevel</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">codec</span><span class="o">=</span><span class="n">ia</span><span class="o">.</span><span class="n">Codecs</span><span class="o">.</span><span class="n">LZ4</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">dtshape</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">dtshape</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a1 cratio: </span><span class="si">{</span><span class="n">a1</span><span class="o">.</span><span class="n">cratio</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a2 cratio: </span><span class="si">{</span><span class="n">a2</span><span class="o">.</span><span class="n">cratio</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+a1 cratio: 8.781161022342813
+a2 cratio: 15.030573209604679
+</pre></div></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">a1</span></code> and <code class="docutils literal notranslate"><span class="pre">a2</span></code> have different compression ratios because they are using different properties. <code class="docutils literal notranslate"><span class="pre">a1</span></code> is using the LZ4 codec with compression level 3, whereas <code class="docutils literal notranslate"><span class="pre">a2</span></code> was using ZSTD and compression level 1, which are the global defaults that we set in the previous section.</p>
+<p>That’s basically all for this tutorial. Remember that you can create arbitrarily large arrays either in-memory or on-disk, and that you can choose from a large variety of parameters in order to tailor arrays to your own needs. Also, make sure that you use the advanced global and contextual configurations for avoiding too much parameter clutter in your array creation calls.</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="../tutorials.html" title="previous page">Tutorials</a>
+    <a class='right-next' id="next-link" href="random.html" title="next page">Statistical distributions</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, ironArray Development Team.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

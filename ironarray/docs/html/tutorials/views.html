@@ -1,0 +1,989 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slicing and Views &#8212; ironArray for Python 1.0.0-beta.1 documentation</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../_static/ironArray_logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Matrix multiplication" href="matmul.html" />
+    <link rel="prev" title="Statistical distributions" href="random.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../index.html">
+    
+      <img src="../_static/ironArray.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../intro.html">Introduction</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../install.html">Installation</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../reference.html">Library Reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../config.html">Configuring ironArray</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="creation.html">Getting started</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="random.html">Statistical distributions</a>
+                </li>
+            
+          
+            
+                <li class="active">
+                    <a href="">Slicing and Views</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="matmul.html">Matrix multiplication</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="reductions.html">Reductions</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-memory.html">Expression Evaluation (In-Memory)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-disk.html">Expression Evaluation (On-Disk)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="error-handling.html">Error handling</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#Optimization-Tips" class="nav-link">Optimization Tips</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Slicing-and-Views">
+<h1>Slicing and Views<a class="headerlink" href="#Slicing-and-Views" title="Permalink to this headline">¶</a></h1>
+<p>ironArray is meant to store large arrays, but in practice you only want to access single elements or small parts of them. Here you will learn how to do that with the help of so called <em>views</em>. Views are just references to the part of a larger array that is interesting.</p>
+<p>Let’s start by creating an array in memory:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">iarray</span> <span class="k">as</span> <span class="nn">ia</span>
+
+<span class="n">dtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">((</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">dtshape</span><span class="p">)</span>
+<span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;IArray (1000, 10000) np.float64&gt;
+</pre></div></div>
+</div>
+<p>Now suppose that we just want to access the first 2x2 square. We just use the NumPy notation for doing this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">view</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">view</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;IArray (2,) np.float64&gt;
+</pre></div></div>
+</div>
+<p>as you see, we get another <code class="docutils literal notranslate"><span class="pre">IArray</span></code> instance, but a special one: a <em>view</em>. You can always check whether an array is a view or not with the <code class="docutils literal notranslate"><span class="pre">is_view()</span></code> method:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">view</span><span class="o">.</span><span class="n">is_view</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<p>Of course, our initial array is not a view:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">arr</span><span class="o">.</span><span class="n">is_view</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False
+</pre></div></div>
+</div>
+<p>You can visualize the data in the view in the same way than a regular <code class="docutils literal notranslate"><span class="pre">IArray</span></code>, i.e. using <code class="docutils literal notranslate"><span class="pre">ia.iarray2numpy</span></code>. However, there is a handy shortcut for doing the same thing:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">view</span><span class="o">.</span><span class="n">data</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.0000e+00, 1.0000e+00],
+       [1.0000e+04, 1.0001e+04]])
+</pre></div></div>
+</div>
+<p>In general, it is pretty common to use the <code class="docutils literal notranslate"><span class="pre">.data</span></code> accessor when you want to retrieve the actual data out of an <code class="docutils literal notranslate"><span class="pre">IArray</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">arr</span><span class="p">[:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([    0., 10000., 20000., 30000.])
+</pre></div></div>
+</div>
+<p>So, retrieving the interesting data out of your IArray is pretty similar to NumPy convention.</p>
+<p><strong>Note:</strong> IArray objects support most of the NumPy indexing syntax for getting slices with some exceptions:</p>
+<ol class="arabic simple">
+<li><p>IArray does not have support for strides (the <code class="docutils literal notranslate"><span class="pre">step</span></code> part of slices).</p></li>
+<li><p>It does not implement advanced indexing tricks.</p></li>
+</ol>
+<p>At any rate, whenever you want to use this functionality, you can always get a NumPy array out of an IArray (or a view of it) and apply your desired indexing there. Remember that ironArray is meant for handling very large arrays, so there is no shame in getting the interesting slice as a NumPy object and then do your work over it.</p>
+<p>Finally, indexing also applies to arrays that are stored persistently on disk. ironArray will use the information about the data you want and will read and decompress only the part that is necessary. And due to the double partitioning and fast compression codecs, this is in general very fast. See the <code class="docutils literal notranslate"><span class="pre">Optimization</span> <span class="pre">Tips</span></code> section on how to fine-tune the slicing of arrays.</p>
+<div class="section" id="Optimization-Tips">
+<h2>Optimization Tips<a class="headerlink" href="#Optimization-Tips" title="Permalink to this headline">¶</a></h2>
+<p>ironArray offers two levels of partitioning, the chunk and the block, and that means more degree of flexibility in optimizing I/O when compared to other solutions offering just one single level (Zarr, HDF5…). In addition, if you don’t say anything default values for chunkshape and blockshape (based on CPU’s cache sizes). However, you can still override defaults and fine tune I/O manually.</p>
+<p>Here it comes a small tutorial on how to do this fine tuning. Let’s start with a large array that is on-disk; as we don’t want to use too much disk space, let’s use a zero-filled array which compresses very well. We are going to exercise slicing in two different directions: getting 2 rows and getting 2 columns. Here it is how this performs:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">iarray</span> <span class="k">as</span> <span class="nn">ia</span>
+
+<span class="n">SHAPE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">SHAPE</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">SHAPE</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">yy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">xx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">yy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">dtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">(</span><span class="n">SHAPE</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">storage</span><span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">(</span><span class="n">urlpath</span><span class="o">=</span><span class="s2">&quot;large-arr.iarr&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ia</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">fp_mantissa_bits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">storage</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cratio: </span><span class="si">{</span><span class="n">arr</span><span class="o">.</span><span class="n">cratio</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span>
+
+<span class="o">%</span><span class="k">time</span> arr[:, 10:12].data
+<span class="o">%</span><span class="k">time</span> arr[10:12, :].data
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+cratio: 9.2
+CPU times: user 5.8 ms, sys: 10.4 ms, total: 16.2 ms
+Wall time: 6.19 ms
+CPU times: user 2.89 ms, sys: 6.77 ms, total: 9.66 ms
+Wall time: 3.04 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.4465332 , 0.44580078, 0.44506836, ..., 0.00431442, 0.00447464,
+        0.00463104],
+       [0.44580078, 0.44506836, 0.44433594, ..., 0.00432968, 0.0044899 ,
+        0.0046463 ]])
+</pre></div></div>
+</div>
+<p>As you see, the total time being smaller than the wall time is an indication of ironArray’s parallel reading capabilities.</p>
+<p>For comparison, let’s see how Zarr and HDF5 behaves at doing the same thing:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">zarr</span>
+<span class="kn">from</span> <span class="nn">numcodecs</span> <span class="kn">import</span> <span class="n">Blosc</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+
+<span class="n">lz4</span> <span class="o">=</span> <span class="n">Blosc</span><span class="p">(</span>
+    <span class="n">cname</span><span class="o">=</span><span class="s2">&quot;lz4&quot;</span><span class="p">,</span>
+    <span class="n">clevel</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="n">Blosc</span><span class="o">.</span><span class="n">SHUFFLE</span><span class="p">,</span>
+    <span class="n">blocksize</span><span class="o">=</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">blockshape</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">itemsize</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">store</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">DirectoryStore</span><span class="p">(</span><span class="s1">&#39;large-arr.zarr&#39;</span><span class="p">)</span>
+<span class="n">z_arr</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">SHAPE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">store</span><span class="o">=</span><span class="n">store</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">compressor</span><span class="o">=</span><span class="n">lz4</span><span class="p">)</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">z_arr</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cratio: </span><span class="si">{</span><span class="n">z_arr</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="n">z_arr</span><span class="o">.</span><span class="n">nbytes_stored</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">time</span> z_arr[:, 10:12]
+<span class="o">%</span><span class="k">time</span> z_arr[10:12, :]
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+cratio: 10.0
+CPU times: user 15.7 ms, sys: 6.04 ms, total: 21.7 ms
+Wall time: 10.1 ms
+CPU times: user 7.6 ms, sys: 3.13 ms, total: 10.7 ms
+Wall time: 5.05 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.4465332 , 0.44580078, 0.44506836, ..., 0.00431442, 0.00447464,
+        0.00463104],
+       [0.44580078, 0.44506836, 0.44433594, ..., 0.00432968, 0.0044899 ,
+        0.0046463 ]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">h5py</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;large-arr.hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<span class="c1"># We are using LZF codec which is a fast codec distributed with h5py</span>
+<span class="n">h5_arr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;h5_arr&quot;</span><span class="p">,</span> <span class="n">SHAPE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;lzf&quot;</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">h5_arr</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="o">%</span><span class="k">time</span> data = h5_arr[:, 10:12]
+<span class="o">%</span><span class="k">time</span> data = h5_arr[10:12, :]
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 20.7 ms, sys: 922 µs, total: 21.7 ms
+Wall time: 21.7 ms
+CPU times: user 9.49 ms, sys: 200 µs, total: 9.69 ms
+Wall time: 9.7 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.4465332 , 0.44580078, 0.44506836, ..., 0.00431442, 0.00447464,
+        0.00463104],
+       [0.44580078, 0.44506836, 0.44433594, ..., 0.00432968, 0.0044899 ,
+        0.0046463 ]])
+</pre></div></div>
+</div>
+<p>For further optimization, let’s have a look at the chunkshape/blockshape that is assigned automatically to your ironArray array:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">arr</span><span class="o">.</span><span class="n">chunkshape</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">blockshape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+((512, 512), (64, 128))
+</pre></div></div>
+</div>
+<p>Now, let’s suppose that you prefer to accelerate the access in the <strong>row</strong> direction, and that the row strips will be thin in general (but still, you don’t want to penalize accesses in <strong>column</strong> direction too much). In this case, you might want to select a blockshape that stretches more in the row direction (but without making the block too small):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">storage</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">((</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span> <span class="n">urlpath</span><span class="o">=</span><span class="s2">&quot;large-arr-2.iarr&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ia</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">fp_mantissa_bits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">storage</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cratio: </span><span class="si">{</span><span class="n">arr</span><span class="o">.</span><span class="n">cratio</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">time</span> arr[:, 10:12].data
+<span class="o">%</span><span class="k">time</span> arr[10:12, :].data
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+cratio: 2.2
+CPU times: user 17.3 ms, sys: 20 ms, total: 37.2 ms
+Wall time: 7.64 ms
+CPU times: user 2.11 ms, sys: 6.3 ms, total: 8.41 ms
+Wall time: 3.47 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.44677258, 0.44598785, 0.44520237, ..., 0.00431732, 0.00447622,
+        0.00463364],
+       [0.44598079, 0.44519602, 0.44441049, ..., 0.00433343, 0.00449218,
+        0.00464944]])
+</pre></div></div>
+</div>
+<p>ok, so by just changing the blockshape and adapting it to our read pattern may or <em>may not</em> improve the slicing times. A better bet is adapting both the blockshape <em>and</em> the chunkshape as well:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">storage</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2048</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2048</span><span class="p">),</span> <span class="n">urlpath</span><span class="o">=</span><span class="s2">&quot;large-arr-2.iarr&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ia</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">fp_mantissa_bits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">storage</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cratio: </span><span class="si">{</span><span class="n">arr</span><span class="o">.</span><span class="n">cratio</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">time</span> arr[:, 10:12].data
+<span class="o">%</span><span class="k">time</span> arr[10:12, :].data
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+cratio: 2.1
+CPU times: user 57.3 ms, sys: 78.1 ms, total: 135 ms
+Wall time: 22.3 ms
+CPU times: user 1.18 ms, sys: 2.6 ms, total: 3.77 ms
+Wall time: 2 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.44677258, 0.44598785, 0.44520237, ..., 0.00431732, 0.00447622,
+        0.00463364],
+       [0.44598079, 0.44519602, 0.44441049, ..., 0.00433343, 0.00449218,
+        0.00464944]])
+</pre></div></div>
+</div>
+<p>In this case, we see that we have been able to get much better speed in the row axis (at the cost of being slower in the column axis). Finally, let’s increase the chunkshape to the maximum in the row axis:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">storage</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">((</span><span class="mi">128</span><span class="p">,</span> <span class="mi">10000</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10000</span><span class="p">),</span> <span class="n">urlpath</span><span class="o">=</span><span class="s2">&quot;large-arr-3.iarr&quot;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ia</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">fp_mantissa_bits</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">storage</span><span class="p">)</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cratio: </span><span class="si">{</span><span class="n">arr</span><span class="o">.</span><span class="n">cratio</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">time</span> arr[:, 10:12].data
+<span class="o">%</span><span class="k">time</span> arr[10:12, :].data
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+cratio: 2.0
+CPU times: user 486 ms, sys: 454 ms, total: 940 ms
+Wall time: 127 ms
+CPU times: user 787 µs, sys: 649 µs, total: 1.44 ms
+Wall time: 1.39 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.44677258, 0.44598785, 0.44520237, ..., 0.00431732, 0.00447622,
+        0.00463364],
+       [0.44598079, 0.44519602, 0.44441049, ..., 0.00433343, 0.00449218,
+        0.00464944]])
+</pre></div></div>
+</div>
+<p>In this case we have been able to reduce the times in the row axis to a bare minimum, but times for column-wise access went up to values that are a bit too much. What is the best partition configuration largely depends on your needs. In this case it is pretty clear that we prefer the previous configuration.</p>
+<p>It is worth noting that compression ratio has been badly affected because of the new partitionings. In general, when you change the partition shapes, you should expect significant changes in compression ratios.</p>
+<p>Just for comparison purposes, let’s see how a similar configuration affects to Zarr and HDF5:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">store</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">DirectoryStore</span><span class="p">(</span><span class="s1">&#39;large-arr-2.zarr&#39;</span><span class="p">)</span>
+<span class="n">z_arr</span> <span class="o">=</span> <span class="n">zarr</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">SHAPE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">store</span><span class="o">=</span><span class="n">store</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2048</span><span class="p">),</span> <span class="n">compressor</span><span class="o">=</span><span class="n">lz4</span><span class="p">)</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">z_arr</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cratio: </span><span class="si">{</span><span class="n">z_arr</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">/</span> <span class="n">z_arr</span><span class="o">.</span><span class="n">nbytes_stored</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">time</span> z_arr[:, 10:12]
+<span class="o">%</span><span class="k">time</span> z_arr[10:12, :]
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+cratio: 2.0
+CPU times: user 87.7 ms, sys: 35.9 ms, total: 124 ms
+Wall time: 57.3 ms
+CPU times: user 9.1 ms, sys: 2.75 ms, total: 11.8 ms
+Wall time: 4.97 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.44677258, 0.44598785, 0.44520237, ..., 0.00431732, 0.00447622,
+        0.00463364],
+       [0.44598079, 0.44519602, 0.44441049, ..., 0.00433343, 0.00449218,
+        0.00464944]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="s2">&quot;large-arr-2.hdf5&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<span class="n">h5_arr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">create_dataset</span><span class="p">(</span><span class="s2">&quot;h5_arr&quot;</span><span class="p">,</span> <span class="n">SHAPE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">chunks</span><span class="o">=</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2048</span><span class="p">),</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;lzf&quot;</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">arr</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">h5_arr</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="o">%</span><span class="k">time</span> data = h5_arr[:, 10:12]
+<span class="o">%</span><span class="k">time</span> data = h5_arr[10:12, :]
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 215 ms, sys: 16.4 ms, total: 231 ms
+Wall time: 231 ms
+CPU times: user 13.6 ms, sys: 1.37 ms, total: 15 ms
+Wall time: 15 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0.44677258, 0.44598785, 0.44520237, ..., 0.00431732, 0.00447622,
+        0.00463364],
+       [0.44598079, 0.44519602, 0.44441049, ..., 0.00433343, 0.00449218,
+        0.00464944]])
+</pre></div></div>
+</div>
+<p>So, we see that ironArray, by providing two levels of partitioning, it has more fine-grained flexibility in adapting to different I/O patterns. Also, this two-level partitions allow for better reducing the number of data read from disk (or memory) than similar solutions with just one level partitioning.</p>
+<p>So, we see that ironArray, by providing two levels of partitioning, it has more fine-grained flexibility in adapting to different I/O patterns. Also, this two-level partitions allow for better reducing the number of data read from disk (or memory) than similar solutions with just one level partitioning.</p>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="random.html" title="previous page">Statistical distributions</a>
+    <a class='right-next' id="next-link" href="matmul.html" title="next page">Matrix multiplication</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, ironArray Development Team.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

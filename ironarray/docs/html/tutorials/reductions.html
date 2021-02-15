@@ -1,0 +1,966 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reductions &#8212; ironArray for Python 1.0.0-beta.1 documentation</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../_static/ironArray_logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Expression Evaluation (In-Memory)" href="expressions-memory.html" />
+    <link rel="prev" title="Matrix multiplication" href="matmul.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../index.html">
+    
+      <img src="../_static/ironArray.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../intro.html">Introduction</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../install.html">Installation</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../reference.html">Library Reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../config.html">Configuring ironArray</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="creation.html">Getting started</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="random.html">Statistical distributions</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="views.html">Slicing and Views</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="matmul.html">Matrix multiplication</a>
+                </li>
+            
+          
+            
+                <li class="active">
+                    <a href="">Reductions</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-memory.html">Expression Evaluation (In-Memory)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-disk.html">Expression Evaluation (On-Disk)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="error-handling.html">Error handling</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#Optimization-Tips" class="nav-link">Optimization Tips</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#Expressions-with-on-disk-operands" class="nav-link">Expressions with on-disk operands</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Reductions">
+<h1>Reductions<a class="headerlink" href="#Reductions" title="Permalink to this headline">¶</a></h1>
+<p>ironArray supports a broad range of reduction facilities, like <code class="docutils literal notranslate"><span class="pre">sum</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code>, <code class="docutils literal notranslate"><span class="pre">mean</span></code> and others. Also, they work on any (or group of) dimensions. One interesting aspect of these is that the implementation leverages the multi-threading capabilities of ironArray, so they can be pretty fast (although some times they need some help from the user).</p>
+<p>In order to exercise some of this functionality, let’s download some open data from the network. In this case, we are interested in downloading precipitation data from a period of 3 months. With a decent connection, this should not take more than a minute to download. Let’s go:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">zarr</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">s3fs</span>
+<span class="kn">import</span> <span class="nn">iarray</span> <span class="k">as</span> <span class="nn">ia</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">open_zarr</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">datestart</span><span class="p">,</span> <span class="n">dateend</span><span class="p">):</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="n">s3fs</span><span class="o">.</span><span class="n">S3FileSystem</span><span class="p">(</span><span class="n">anon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">datestring</span> <span class="o">=</span> <span class="s1">&#39;era5-pds/zarr/</span><span class="si">{year}</span><span class="s1">/</span><span class="si">{month:02d}</span><span class="s1">/data/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="n">month</span><span class="p">)</span>
+
+    <span class="n">precip_zarr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">s3fs</span><span class="o">.</span><span class="n">S3Map</span><span class="p">(</span><span class="n">datestring</span> <span class="o">+</span> <span class="s1">&#39;precipitation_amount_1hour_Accumulation.zarr/&#39;</span><span class="p">,</span>
+                                             <span class="n">s3</span><span class="o">=</span><span class="n">fs</span><span class="p">),</span>
+                                 <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;zarr&quot;</span><span class="p">)</span>
+    <span class="n">precip_zarr</span> <span class="o">=</span> <span class="n">precip_zarr</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time1</span><span class="o">=</span><span class="nb">slice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">datestart</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">dateend</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">precip_zarr</span><span class="o">.</span><span class="n">precipitation_amount_1hour_Accumulation</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">precip_m1</span> <span class="o">=</span> <span class="n">open_zarr</span><span class="p">(</span><span class="mi">1987</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;1987-10-01&#39;</span><span class="p">,</span> <span class="s1">&#39;1987-10-30 23:59&#39;</span><span class="p">)</span>
+<span class="n">precip_m2</span> <span class="o">=</span> <span class="n">open_zarr</span><span class="p">(</span><span class="mi">1987</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;1987-11-01&#39;</span><span class="p">,</span> <span class="s1">&#39;1987-11-30 23:59&#39;</span><span class="p">)</span>
+<span class="n">precip_m3</span> <span class="o">=</span> <span class="n">open_zarr</span><span class="p">(</span><span class="mi">1987</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;1987-12-01&#39;</span><span class="p">,</span> <span class="s1">&#39;1987-12-30 23:59&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 381 ms, sys: 16 ms, total: 397 ms
+Wall time: 16.3 s
+</pre></div></div>
+</div>
+<p>Let’s see how one of these arrays of monthly precipitation looks like:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">repr</span><span class="p">(</span><span class="n">precip_m1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#34;&lt;xarray.DataArray &#39;precipitation_amount_1hour_Accumulation&#39; (time1: 720, lat: 721, lon: 1440)&gt;\n[747532800 values with dtype=float32]\nCoordinates:\n  * lat      (lat) float32 90.0 89.75 89.5 89.25 ... -89.25 -89.5 -89.75 -90.0\n  * lon      (lon) float32 0.0 0.25 0.5 0.75 1.0 ... 359.0 359.2 359.5 359.8\n  * time1    (time1) datetime64[ns] 1987-10-01 ... 1987-10-30T23:00:00\nAttributes:\n    long_name:       Total precipitation\n    nameCDM:         Total_precipitation_1hour_Accumulation\n    nameECMWF:       Total precipitation\n    product_type:    forecast\n    shortNameECMWF:  tp\n    standard_name:   precipitation_amount\n    units:           m&#34;
+</pre></div></div>
+</div>
+<p>Ok, so that’s about 3 GB per month, so the full dataset is about 9 GB.</p>
+<p>Now, let’s build a NumPy array out of these (be careful if you plan to run this in your local machine, as you will need at least 16 GB of free memory):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">precip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">precip_m1</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">precip_m2</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">precip_m3</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+<span class="n">precip</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 13.4 s, sys: 2.19 s, total: 15.6 s
+Wall time: 22.7 s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(3, 720, 721, 1440)
+</pre></div></div>
+</div>
+<p>Now, let’s suppose that we want to compute the mean for the precipitation per hour during our period of time. As the time axis is 1 in our new <code class="docutils literal notranslate"><span class="pre">precip</span></code> array, we want to reduce on all axis, except the first. That is:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">reduc0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">precip</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 788 ms, sys: 0 ns, total: 788 ms
+Wall time: 788 ms
+</pre></div></div>
+</div>
+<p>Ok. Now, let’s import this data into ironArray before proceeding with reductions:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">ia_precip</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">precip</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ia_precip</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cratio: &quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">ia_precip</span><span class="o">.</span><span class="n">cratio</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;IArray (3, 720, 721, 1440) np.float32&gt;
+cratio:  23.46
+CPU times: user 20.6 s, sys: 3.41 s, total: 24 s
+Wall time: 7.9 s
+</pre></div></div>
+</div>
+<p>Ok, so ironArray achieves a compression ratio of around 20x, which is a big win in terms of memory consumption. Now, let’s have a look at how reduction works:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">reduc1</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ia_precip</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 4min 52s, sys: 392 ms, total: 4min 53s
+Wall time: 14.8 s
+</pre></div></div>
+</div>
+<p>Ok, so that’s pretty slow. Now, it is time to remember that ironArray uses chunked storage, even when it holds data in-memory. In this case, we have been traversing the array in a very innefficient way. In general, in chunked storage, it is always better to start reducing by the dimension that is the largest, and we took the inverse order. With this in mind, let’s try with a more reasonable order:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">reduc1</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ia_precip</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 9.83 s, sys: 212 ms, total: 10 s
+Wall time: 678 ms
+</pre></div></div>
+</div>
+<p>Ok, that’s much better. This time is pretty competitive. Now, let’s compare actual data with NumPy (just in case):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_almost_equal</span><span class="p">(</span><span class="n">reduc0</span><span class="p">,</span> <span class="n">reduc1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Ok, so the mean calculation has worked correctly.</p>
+<p>If you need to compute this sort of reductions lots of times, you may want to fine tune your ironArray array parameters. If so, just keep reading. But before proceeding further, let’s save our data for later reuse:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">ia</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">ia_precip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="s2">&quot;precip1.iarr&quot;</span><span class="p">)</span>
+<span class="n">ia</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">ia_precip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="s2">&quot;precip2.iarr&quot;</span><span class="p">)</span>
+<span class="n">ia</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">ia_precip</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="s2">&quot;precip3.iarr&quot;</span><span class="p">)</span>
+<span class="n">ia</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">ia_precip</span><span class="p">,</span> <span class="s2">&quot;precip-3m.iarr&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="n">ls</span> <span class="o">-</span><span class="n">lh</span> <span class="n">precip</span><span class="o">*.</span><span class="n">iarr</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;timed exec&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;ia_precip&#39; is not defined
+</pre></div></div>
+</div>
+<p>The dataset is stored now on a single file of 440 MB, which is more than 20x less than the original dataset thanks to compression. That’s a big win!</p>
+<p>Finally, let’s save the data in zarr format for other tutorials too:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>%%time
+
+zarr.save(&quot;precip1.zarr&quot;, precip_m1.values)
+zarr.save(&quot;precip2.zarr&quot;, precip_m2.values)
+zarr.save(&quot;precip3.zarr&quot;, precip_m3.values)
+!du -sh precip*.zarr
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.1G    precip-3m.zarr
+363M    precip1.zarr
+357M    precip2.zarr
+355M    precip3.zarr
+CPU times: user 7.85 s, sys: 795 ms, total: 8.65 s
+Wall time: 3.77 s
+</pre></div></div>
+</div>
+<div class="section" id="Optimization-Tips">
+<h2>Optimization Tips<a class="headerlink" href="#Optimization-Tips" title="Permalink to this headline">¶</a></h2>
+<p>As we know, most of ironArray optimization stems from their two levels of partitioning. Previously, we have been using automatic values for chunkshape and blockshape (based on CPU’s cache sizes). But for maximum speed, there is no replacement for fine tuning chunk and block shapes manually.</p>
+<p>Let’s start by loading the array that we previously stored on-disk:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="kn">import</span> <span class="nn">iarray</span> <span class="k">as</span> <span class="nn">ia</span>
+<span class="n">ia_precip</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;precip-3m.iarr&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 4.22 ms, sys: 13 ms, total: 17.2 ms
+Wall time: 12.9 ms
+</pre></div></div>
+</div>
+<p>So, not too much for loading a 9 GB large array from disk, uh? Well, the thing is that <code class="docutils literal notranslate"><span class="pre">open()</span></code> just loads data when it needs it by default (but for a full in-memory load, see the <code class="docutils literal notranslate"><span class="pre">load()</span></code> function). So, only a tiny portion of the file (the metadata) is read in order to figure out how access the data.</p>
+<p>Now, let’s see the current chunk and block shapes:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">ia_precip</span><span class="o">.</span><span class="n">chunkshape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ia_precip</span><span class="o">.</span><span class="n">blockshape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1, 128, 128, 512)
+(1, 16, 16, 128)
+</pre></div></div>
+</div>
+<p>Now, let’s start with a first attempt to find out the chunk and block shapes that can optimize the reductions. Initially one may think that making the last dimension (the largest) as large as possible could be good decision. Let’s try that by creating another container:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="k">with</span> <span class="n">ia</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1440</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">360</span><span class="p">))</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+    <span class="n">new_precip</span> <span class="o">=</span> <span class="n">ia_precip</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 26.6 s, sys: 1.01 s, total: 27.6 s
+Wall time: 11 s
+</pre></div></div>
+</div>
+<p>And let’s try the reduction with the new array:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">reduc1</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">new_precip</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 8.29 s, sys: 503 ms, total: 8.79 s
+Wall time: 992 ms
+</pre></div></div>
+</div>
+<p>Well, we have got some improvement, which is not bad for a first attempt. After several iterations, one can reach a sort of optimal configuration:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="k">with</span> <span class="n">ia</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">1440</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">720</span><span class="p">))</span> <span class="k">as</span> <span class="n">cfg</span><span class="p">:</span>
+    <span class="n">new_precip</span> <span class="o">=</span> <span class="n">ia_precip</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 21.5 s, sys: 2.41 s, total: 23.9 s
+Wall time: 10.6 s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">reduc1</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">new_precip</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 9.11 s, sys: 69.4 ms, total: 9.18 s
+Wall time: 503 ms
+</pre></div></div>
+</div>
+<p>So, this new time is competitive with NumPy (somewhat better in fact). That means that, when you have to deal with large arrays you should not assume that working with NumPy arrays is the fast thing you can get. With the right tools, and a bit of manual tuning, you can end with very fast solutions for this scenario too.</p>
+</div>
+<div class="section" id="Expressions-with-on-disk-operands">
+<h2>Expressions with on-disk operands<a class="headerlink" href="#Expressions-with-on-disk-operands" title="Permalink to this headline">¶</a></h2>
+<p>So far we have been playing with expressions on in-memory operands, but ironArray can seamlessly work with on-disk arrays too. Let’s save the previous array:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">ia</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">new_precip</span><span class="p">,</span> <span class="s2">&quot;precip-3m-optimal.iarr&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 862 µs, sys: 219 ms, total: 220 ms
+Wall time: 220 ms
+</pre></div></div>
+</div>
+<p>and let’s re-open again but in ‘lazy’ mode and do the reduction from disk:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">new_precip_opt</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;precip-3m-optimal.iarr&quot;</span><span class="p">)</span>
+<span class="n">new_precip_opt</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">IArrayError</span>                               Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-35-ad4b070e3a73&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>new_precip_opt <span class="ansi-blue-fg">=</span> ia<span class="ansi-blue-fg">.</span>open<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;precip-3m-optimal2.iarr&#34;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> new_precip_opt
+
+<span class="ansi-green-fg">~/inaos/iron-array-python/iarray/utils.py</span> in <span class="ansi-cyan-fg">open</span><span class="ansi-blue-fg">(filename, cfg, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    108</span>     &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">    109</span>     <span class="ansi-green-fg">with</span> ia<span class="ansi-blue-fg">.</span>config<span class="ansi-blue-fg">(</span>cfg<span class="ansi-blue-fg">=</span>cfg<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> cfg<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 110</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> ext<span class="ansi-blue-fg">.</span>open<span class="ansi-blue-fg">(</span>cfg<span class="ansi-blue-fg">,</span> filename<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    111</span>
+<span class="ansi-green-intense-fg ansi-bold">    112</span>
+
+<span class="ansi-green-fg">iarray_ext.pyx</span> in <span class="ansi-cyan-fg">iarray.iarray_ext.open</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">iarray_ext.pyx</span> in <span class="ansi-cyan-fg">iarray.iarray_ext.iarray_check</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">IArrayError</span>: b&#39;BLOSC FAILED - 0x800a0000002b040b - error=1,ver=0,rev=10,os=0,neg=0,adj=43,subject=1035,code=2818048,ubits=0x0&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+<span class="n">reduc1</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">new_precip_opt</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;timed exec&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+
+<span class="ansi-red-fg">NameError</span>: name &#39;new_precip_opt&#39; is not defined
+</pre></div></div>
+</div>
+<p>So, although this on-disk time is considerable slower than the in-memory one, it is still not bad. This is interesting because that means that doing out-of-core operations on modern SSDs (our case here) will consume far less memory, while still keeping reasonable times.</p>
+<p>TODO: add a comparison with xarray or dask, for out-of-core reductions</p>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="matmul.html" title="previous page">Matrix multiplication</a>
+    <a class='right-next' id="next-link" href="expressions-memory.html" title="next page">Expression Evaluation (In-Memory)</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, ironArray Development Team.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
