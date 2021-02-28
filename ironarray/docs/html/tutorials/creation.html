@@ -571,7 +571,7 @@ ls -l myarr.iarr
 -rw-r--r-- 1 faltet faltet 606 Jan 20 11:02 myarr.iarr
 </pre></div></div>
 </div>
-<p>and then we’ll read the persistent object from disk. We are going to use <code class="docutils literal notranslate"><span class="pre">ia.open()</span></code> here which, contrarily to <code class="docutils literal notranslate"><span class="pre">ia.load()</span></code>, means reading the data in a lazy way (more on this in next tutorials):</p>
+<p>and then we’ll read the persistent object from disk. We are going to use <code class="docutils literal notranslate"><span class="pre">ia.open()</span></code>instead of <code class="docutils literal notranslate"><span class="pre">ia.load()</span></code> to lazily read in the data as needed (a topic covered in a later turorial):</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
