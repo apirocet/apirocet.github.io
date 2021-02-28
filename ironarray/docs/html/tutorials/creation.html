@@ -488,8 +488,8 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Getting-started">
 <h1>Getting started<a class="headerlink" href="#Getting-started" title="Permalink to this headline">¶</a></h1>
-<p><em>ironArray</em> for Python is a package that implements a multi-dimensional, compressed data container and an optimized computational engine to manange large arrays.</p>
-<p>In this tutorial we will cover creating simple ironArray array. We will instatiate a simple array, then set properties on the array object. We will also see how to set default properties by changing global and contextual configuration settings.</p>
+<p><em>ironArray</em> for Python is a package that implements a multi-dimensional, compressed data container and an optimized computational engine to manage large arrays.</p>
+<p>In this tutorial we will cover creating a simple ironArray array. We will instatiate a simple array, then set properties on the array object. We will also see how to set default properties by changing global and contextual configuration settings.</p>
 <div class="section" id="Creating-an-array">
 <h2>Creating an array<a class="headerlink" href="#Creating-an-array" title="Permalink to this headline">¶</a></h2>
 <p>Let’s start by creating a simple array:</p>
@@ -516,7 +516,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <p>Voilà, the object <code class="docutils literal notranslate"><span class="pre">arr</span></code> contains our first ironArray array.</p>
-<p>To create an array, we first have to define its shape and data type, using the <code class="docutils literal notranslate"><span class="pre">DTShape</span></code> dataclass. The array is then instantiated by the <code class="docutils literal notranslate"><span class="pre">linspace</span></code> constructor, where you specify the <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">stop</span></code> values. Functions in ironArray are written to map closely to NumPy functions; you can consult the NumPy documentation for more information on the functions and their parameters..</p>
+<p>To create an array, we first have to define its shape and data type, using the <code class="docutils literal notranslate"><span class="pre">DTShape</span></code> dataclass. The array is then instantiated by the <code class="docutils literal notranslate"><span class="pre">linspace</span></code> constructor, where you specify the <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">stop</span></code> values. Functions in ironArray are written to map closely to NumPy functions; you can consult the <a class="reference external" href="https://numpy.org/doc/">NumPy documentation</a> for more information on the functions and their parameters.</p>
 <p>The ironArray library is designed to operate on floating point numerical data. Consequently, the arrays currently support two data types: <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
 <p>Let’s convert the <code class="docutils literal notranslate"><span class="pre">arr</span></code> object into a NumPy array and inspect the data:</p>
 <div class="nbinput docutils container">
@@ -615,11 +615,11 @@ ls -l myarr.iarr
 Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
 </pre></div></div>
 </div>
-<p>We can also set multiple properties in a single Storage instance. For example, this <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object has properties for the shape of the chunks and the blocks:</p>
+<p>We can also set multiple properties in a single <code class="docutils literal notranslate"><span class="pre">Storage</span></code> instance. For example, this <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object has properties for the shape of the chunks and the blocks:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">(</span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>The following example shows how to create a Storage object and set its properties, then add it to a larger ironArray array object:</p>
+<p>The following example shows how to create a <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object and set its properties, then add it to a larger ironArray array object:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
