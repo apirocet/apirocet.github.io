@@ -188,38 +188,22 @@
     <ul class="nav section-nav flex-column">
     
         <li class="nav-item toc-entry toc-h2">
-            <a href="#Creating-an-array" class="nav-link">Creating an array</a><ul class="nav section-nav flex-column">
+            <a href="#Array-creation" class="nav-link">Array creation</a><ul class="nav section-nav flex-column">
                 
         <li class="nav-item toc-entry toc-h3">
-            <a href="#Properties" class="nav-link">Properties</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#Storage" class="nav-link">Storage</a>
+            <a href="#Creation-Properties" class="nav-link">Creation Properties</a>
         </li>
     
-        <li class="nav-item toc-entry toc-h4">
+        <li class="nav-item toc-entry toc-h3">
             <a href="#More-Properties" class="nav-link">More Properties</a>
         </li>
     
-            </ul>
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Global-Configuration" class="nav-link">Global Configuration</a>
         </li>
     
         <li class="nav-item toc-entry toc-h3">
-            <a href="#Configuration" class="nav-link">Configuration</a><ul class="nav section-nav flex-column">
-                
-        <li class="nav-item toc-entry toc-h4">
-            <a href="#Global-configuration" class="nav-link">Global configuration</a>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h4">
             <a href="#Contextual-Configuration" class="nav-link">Contextual Configuration</a>
-        </li>
-    
-            </ul>
-        </li>
-    
-        <li class="nav-item toc-entry toc-h3">
-            <a href="#Conclusion" class="nav-link">Conclusion</a>
         </li>
     
             </ul>
@@ -488,11 +472,11 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Getting-started">
 <h1>Getting started<a class="headerlink" href="#Getting-started" title="Permalink to this headline">¶</a></h1>
-<p><em>ironArray</em> for Python is a package that implements a multi-dimensional, compressed data container and an optimized computational engine to manage large arrays.</p>
-<p>In this tutorial we will cover creating a simple ironArray array. We will instatiate a simple array, then set properties on the array object. We will also see how to set default properties by changing global and contextual configuration settings.</p>
-<div class="section" id="Creating-an-array">
-<h2>Creating an array<a class="headerlink" href="#Creating-an-array" title="Permalink to this headline">¶</a></h2>
-<p>Let’s start by creating a simple array:</p>
+<p><em>ironArray</em> for Python is a package that implements a multi-dimensional, compressed data container and a computational engine optimized for operating with large arrays.</p>
+<p>In this tutorial we will cover creating and manipulating <em>ironArray</em> arrays.</p>
+<div class="section" id="Array-creation">
+<h2>Array creation<a class="headerlink" href="#Array-creation" title="Permalink to this headline">¶</a></h2>
+<p>In this first section, we will see how to create the main object of the library, the <em>ironArray</em> arrays, and how to specify different properties into it. Let’s start by creating a simple array:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -515,10 +499,10 @@ div.rendered_html tbody tr:hover {
 &lt;IArray (5, 5) np.float64&gt;
 </pre></div></div>
 </div>
-<p>Voilà, the object <code class="docutils literal notranslate"><span class="pre">arr</span></code> contains our first ironArray array.</p>
-<p>To create an array, we first have to define its shape and data type, using the <code class="docutils literal notranslate"><span class="pre">DTShape</span></code> dataclass. The array is then instantiated by the <code class="docutils literal notranslate"><span class="pre">linspace</span></code> constructor, where you specify the <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">stop</span></code> values. Functions in ironArray are written to map closely to NumPy functions; you can consult the <a class="reference external" href="https://numpy.org/doc/">NumPy documentation</a> for more information on the functions and their parameters.</p>
-<p>The ironArray library is designed to operate on floating point numerical data. Consequently, the arrays currently support two data types: <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
-<p>Let’s convert the <code class="docutils literal notranslate"><span class="pre">arr</span></code> object into a NumPy array and inspect the data:</p>
+<p>Voilà, we have created our first ironArray array in <code class="docutils literal notranslate"><span class="pre">arr</span></code>.</p>
+<p>In order to create the array we have specified the shape and data type of the array within a <code class="docutils literal notranslate"><span class="pre">DTShape</span></code> dataclass. Then we have called the <code class="docutils literal notranslate"><span class="pre">linspace</span></code> constructor, where you specify the <code class="docutils literal notranslate"><span class="pre">start</span></code> and <code class="docutils literal notranslate"><span class="pre">stop</span></code> values. In general, ironArray uses the same names for functions than NumPy, so you can always check the excellent docs in NumPy so as to get more info.</p>
+<p>Right now, ironArray arrays only support two data types, <code class="docutils literal notranslate"><span class="pre">double</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code>. This is an indication of how it is geared towards handling numerical data, as many of the ironArray internal optimizations rely on using floating point datasets. In addition, and thanks to <code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits</span></code> property, you can use any precision between 1 and 64 bit floats and the compression engine will be in charge of getting rid of the unnecessary storage.</p>
+<p>But let’s go back to our example and let’s inspect the data of the array by converting it into a NumPy array:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -541,9 +525,9 @@ array([[-1.        , -0.91666667, -0.83333333, -0.75      , -0.66666667],
        [ 0.66666667,  0.75      ,  0.83333333,  0.91666667,  1.        ]])
 </pre></div></div>
 </div>
-<div class="section" id="Properties">
-<h3>Properties<a class="headerlink" href="#Properties" title="Permalink to this headline">¶</a></h3>
-<p>Besides the shape and data type, we can set more properties on the array. For example, let’s make it persistent:</p>
+<div class="section" id="Creation-Properties">
+<h3>Creation Properties<a class="headerlink" href="#Creation-Properties" title="Permalink to this headline">¶</a></h3>
+<p>Besides the shape and data type, we can set more properties in the array. For example, let’s create it persistently:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -571,7 +555,7 @@ ls -l myarr.iarr
 -rw-r--r-- 1 faltet faltet 606 Jan 20 11:02 myarr.iarr
 </pre></div></div>
 </div>
-<p>and then we’ll read the persistent object from disk:</p>
+<p>and we can open it from disk too:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -594,9 +578,7 @@ ls -l myarr.iarr
  [ 0.66666667  0.75        0.83333333  0.91666667  1.        ]]
 </pre></div></div>
 </div>
-<div class="section" id="Storage">
-<h4>Storage<a class="headerlink" href="#Storage" title="Permalink to this headline">¶</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">Storage</span></code> class is used to tune the storage for your arrays. The <code class="docutils literal notranslate"><span class="pre">urlpath</span></code> property is just one of many properties that can be set in a <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object. See the [Storage documentation] for more details on how ironArray storage can be optimized to improve performance and decrease array storage size.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">urlpath</span></code> parameter can be used along with many others in the <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -615,11 +597,11 @@ ls -l myarr.iarr
 Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
 </pre></div></div>
 </div>
-<p>We can also set multiple properties in a single <code class="docutils literal notranslate"><span class="pre">Storage</span></code> instance. For example, this <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object has properties for the shape of the chunks and the blocks:</p>
+<p>For clarity, we can also group them in an Storage instance. For example, the next <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object indicates the shape of both the chunks and the blocks:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ia</span><span class="o">.</span><span class="n">Storage</span><span class="p">(</span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>The following example shows how to create a <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object and set its properties, then add it to a larger ironArray array object:</p>
+<p>Let’s use this Storage property to create a slightly larger array, more appropiate for ironArray usage:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -649,11 +631,11 @@ ls -lh large_arr.iarr
 -rw-r--r-- 1 faltet faltet 103M Jan 20 11:02 large_arr.iarr
 </pre></div></div>
 </div>
-<p>We have just created an array containing about 530MB of data. Thanks to integrated compression, the size of the serialized array on disk is only 103MB, about 5 times smaller. In contrast to ordinary chunked and compressed data container libraries that support just a single level of data partitioning (such as HDF5 and Zarr), IronArray allows for two levels: chunks and blocks. As we’ll see later, two levels offer more flexibility and options for tuning performance on modern CPU architectures.</p>
+<p>in this case, we have created an array of about 530 MB, but thanks to integrated compression, it takes just less than 5x the storage space. Contrarily to ordinary chunked and compressed data container libraries that supports just 1 level of data partitioning (HDF5, Zarr…), ironArray allows for 2 levels: chunks and blocks. This has important impact in the performance of modern computer architectures. But don’t get too fast for now; more on that later.</p>
 </div>
 <div class="section" id="More-Properties">
-<h4>More Properties<a class="headerlink" href="#More-Properties" title="Permalink to this headline">¶</a></h4>
-<p>You may set many other properties when creating an ironArray array. Here we set some compression properties:</p>
+<h3>More Properties<a class="headerlink" href="#More-Properties" title="Permalink to this headline">¶</a></h3>
+<p>When creating arrays, ironArray lets you specify many other parameters such as compression related ones:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -683,12 +665,12 @@ ls -lh large_arr2.iarr
 -rw-r--r-- 1 faltet faltet 31M Jan 20 11:02 large_arr2.iarr
 </pre></div></div>
 </div>
-<p>As you can see, we created an array that holds 530MB of data, as before. But now the serialized data only occupies 31MB of disk space. We changed the compression codec and mantissa bits properties to shrink the storage size:</p>
+<p>So, in this case the space required to store the array is much less than before mainly due to two reasons:</p>
 <ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">codec=ia.Codecs.ZSTD</span></code>: ZSTD offers better compression.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits=30</span></code>: We are setting just 30 significant bits in the mantissa, improving the compression ratio. You can set the <code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits</span></code> to any precision between 1 and 64 bit floats; the compression engine will compress the data to fit the specified precision.</p></li>
+<li><p>We are using a better codec for compression (ZSTD).</p></li>
+<li><p>We are requiring just 30 significant bits in the mantissa, improving the compression ratio.</p></li>
 </ol>
-<p>You can see the complete set of supported properties and their defaults by examining an instance of <code class="docutils literal notranslate"><span class="pre">ia.Config</span></code>:</p>
+<p>You can see the complete set of supported arguments, as well as looking at its defaults, by printing an instance of <code class="docutils literal notranslate"><span class="pre">ia.Config</span></code>:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -707,14 +689,11 @@ ls -lh large_arr2.iarr
 Config(codec=&lt;Codecs.LZ4: 1&gt;, clevel=5, filters=[&lt;Filters.SHUFFLE: 1&gt;], fp_mantissa_bits=0, use_dict=False, nthreads=28, eval_method=&lt;Eval.AUTO: 1&gt;, seed=1, random_gen=&lt;RandomGen.MERSENNE_TWISTER: 0&gt;, storage=Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False), chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
 </pre></div></div>
 </div>
+<p>Of course, specifying all the compression and storage related arguments for every call in ironArray can get boring pretty quickly. For avoid this you can either modify the global configuration defaults, or doing so with a context.</p>
 </div>
-</div>
-<div class="section" id="Configuration">
-<h3>Configuration<a class="headerlink" href="#Configuration" title="Permalink to this headline">¶</a></h3>
-<p>Setting the same compression and storage-related properties every time you create an ironArray array object can become tedious and repetitive, if you are dealing with known datasets with stable characteristics. You have the option to set default properties in either the global configuration or within a context.</p>
-<div class="section" id="Global-configuration">
-<h4>Global configuration<a class="headerlink" href="#Global-configuration" title="Permalink to this headline">¶</a></h4>
-<p>If you will always use the same configuration parameters in your script, it might be a good idea to set default global properties as part of your script initialization:</p>
+<div class="section" id="Global-Configuration">
+<h3>Global Configuration<a class="headerlink" href="#Global-Configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you are going to use the same configuration parameters in your script, it might be a good idea to change the global parameters:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
@@ -733,7 +712,7 @@ Config(codec=&lt;Codecs.LZ4: 1&gt;, clevel=5, filters=[&lt;Filters.SHUFFLE: 1&gt
 Config(codec=&lt;Codecs.ZSTD: 5&gt;, clevel=1, filters=[&lt;Filters.SHUFFLE: 1&gt;], fp_mantissa_bits=0, use_dict=False, nthreads=28, eval_method=&lt;Eval.AUTO: 1&gt;, seed=1, random_gen=&lt;RandomGen.MERSENNE_TWISTER: 0&gt;, storage=Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False), chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
 </pre></div></div>
 </div>
-<p>You can verify that the new default properties are now set: the default compression codec has changed to ZSTD, and the default compression level has changed to 1.</p>
+<p>After doing that, the defaults for the global configuration changed:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
@@ -752,11 +731,11 @@ Config(codec=&lt;Codecs.ZSTD: 5&gt;, clevel=1, filters=[&lt;Filters.SHUFFLE: 1&g
 Config(codec=&lt;Codecs.ZSTD: 5&gt;, clevel=1, filters=[&lt;Filters.SHUFFLE: 1&gt;], fp_mantissa_bits=0, use_dict=False, nthreads=28, eval_method=&lt;Eval.AUTO: 1&gt;, seed=1, random_gen=&lt;RandomGen.MERSENNE_TWISTER: 0&gt;, storage=Storage(chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False), chunkshape=None, blockshape=None, urlpath=None, enforce_frame=False, plainbuffer=False)
 </pre></div></div>
 </div>
-<p>These will be the defaults for <em>all</em> the ironArray functions that are called in your script.</p>
+<p>and from then on, these will be the defaults for <em>all</em> the functions that are called in your script.</p>
 </div>
 <div class="section" id="Contextual-Configuration">
-<h4>Contextual Configuration<a class="headerlink" href="#Contextual-Configuration" title="Permalink to this headline">¶</a></h4>
-<p>Sometimes you want different configuration profiles for different kinds of arrays. In this case, you can create <code class="docutils literal notranslate"><span class="pre">ia.config</span></code> objects with custom settings that can be applied to selected arrays. This is an example of <em>contextual configuration</em>:</p>
+<h3>Contextual Configuration<a class="headerlink" href="#Contextual-Configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you don’t want to mess with your global configuration, <code class="docutils literal notranslate"><span class="pre">ia.config</span></code> context comes handy:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
@@ -780,12 +759,8 @@ a1 cratio: 8.781161022342813
 a2 cratio: 15.030573209604679
 </pre></div></div>
 </div>
-<p>In this case, <code class="docutils literal notranslate"><span class="pre">a1</span></code> and <code class="docutils literal notranslate"><span class="pre">a2</span></code> have different compression ratios, as they have different compression levels and compression codecs set as default properties on their array configurations. <code class="docutils literal notranslate"><span class="pre">a1</span></code> is using the LZ4 codec with compression level 3, whereas <code class="docutils literal notranslate"><span class="pre">a2</span></code> is using ZSTD and compression level 1, the global defaults that we set in the previous example.</p>
-</div>
-</div>
-<div class="section" id="Conclusion">
-<h3>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this headline">¶</a></h3>
-<p>Now you can create ironArray arrays with specific properties. You can create arbitrarily large arrays either in memory or on disk, and you can tailor arrays to your own needs using ironArray configuration properties. Use the advanced global and contextual configurations to set often-used configuration profiles for your arrays.</p>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">a1</span></code> and <code class="docutils literal notranslate"><span class="pre">a2</span></code> have different compression ratios because they are using different properties. <code class="docutils literal notranslate"><span class="pre">a1</span></code> is using the LZ4 codec with compression level 3, whereas <code class="docutils literal notranslate"><span class="pre">a2</span></code> was using ZSTD and compression level 1, which are the global defaults that we set in the previous section.</p>
+<p>That’s basically all for this tutorial. Remember that you can create arbitrarily large arrays either in-memory or on-disk, and that you can choose from a large variety of parameters in order to tailor arrays to your own needs. Also, make sure that you use the advanced global and contextual configurations for avoiding too much parameter clutter in your array creation calls.</p>
 </div>
 </div>
 </div>
