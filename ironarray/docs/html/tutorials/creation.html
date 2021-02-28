@@ -571,7 +571,7 @@ ls -l myarr.iarr
 -rw-r--r-- 1 faltet faltet 606 Jan 20 11:02 myarr.iarr
 </pre></div></div>
 </div>
-<p>and then we’ll read the persistent object from disk:</p>
+<p>and then we’ll read the persistent object from disk. We are going to use <code class="docutils literal notranslate"><span class="pre">ia.open()</span></code> here which, contrarily to <code class="docutils literal notranslate"><span class="pre">ia.load()</span></code>, means reading the data in a lazy way (more on this in next tutorials):</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -596,7 +596,7 @@ ls -l myarr.iarr
 </div>
 <div class="section" id="Storage">
 <h4>Storage<a class="headerlink" href="#Storage" title="Permalink to this headline">¶</a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">Storage</span></code> class is used to tune the storage for your arrays. The <code class="docutils literal notranslate"><span class="pre">urlpath</span></code> property is just one of many properties that can be set in a <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object. See the [Storage documentation] for more details on how ironArray storage can be optimized to improve performance and decrease array storage size.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Storage</span></code> class is used to tune the storage for your arrays. The <code class="docutils literal notranslate"><span class="pre">urlpath</span></code> property is just one of many properties that can be set in a <code class="docutils literal notranslate"><span class="pre">Storage</span></code> object. See the <a class="reference external" href="../reference/autofiles/config/iarray.Storage.html">Storage documentation</a> for more details on how ironArray storage can be optimized to improve performance and decrease array storage size.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -649,7 +649,7 @@ ls -lh large_arr.iarr
 -rw-r--r-- 1 faltet faltet 103M Jan 20 11:02 large_arr.iarr
 </pre></div></div>
 </div>
-<p>We have just created an array containing about 530MB of data. Thanks to integrated compression, the size of the serialized array on disk is only 103MB, about 5 times smaller. In contrast to ordinary chunked and compressed data container libraries that support just a single level of data partitioning (such as HDF5 and Zarr), IronArray allows for two levels: chunks and blocks. As we’ll see later, two levels offer more flexibility and options for tuning performance on modern CPU architectures.</p>
+<p>We have just created an array containing about 500MB of data. Thanks to integrated compression, the size of the serialized array on disk is only 100MB, about 5 times smaller. In contrast to ordinary chunked and compressed data container libraries that support just a single level of data partitioning (such as HDF5 and Zarr), IronArray allows for two levels: chunks and blocks. As we’ll see later, two levels offer more flexibility and options for tuning performance on modern CPU architectures.</p>
 </div>
 <div class="section" id="More-Properties">
 <h4>More Properties<a class="headerlink" href="#More-Properties" title="Permalink to this headline">¶</a></h4>
@@ -683,10 +683,10 @@ ls -lh large_arr2.iarr
 -rw-r--r-- 1 faltet faltet 31M Jan 20 11:02 large_arr2.iarr
 </pre></div></div>
 </div>
-<p>As you can see, we created an array that holds 530MB of data, as before. But now the serialized data only occupies 31MB of disk space. We changed the compression codec and mantissa bits properties to shrink the storage size:</p>
+<p>As you can see, we created an array that holds 500MB of data, as before. But now the serialized data only occupies 30MB of disk space. We changed the compression codec and mantissa bits properties to shrink the storage size:</p>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">codec=ia.Codecs.ZSTD</span></code>: ZSTD offers better compression.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits=30</span></code>: We are setting just 30 significant bits in the mantissa, improving the compression ratio. You can set the <code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits</span></code> to any precision between 1 and 64 bit floats; the compression engine will compress the data to fit the specified precision.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits=30</span></code>: We are setting just 30 significant bits in the mantissa, improving the compression ratio. You can set the <code class="docutils literal notranslate"><span class="pre">fp_mantissa_bits</span></code> to any precision between 1 and 24 bit (float32) or 53 bit (float64); the compression engine will compress the data to fit the specified precision.</p></li>
 </ol>
 <p>You can see the complete set of supported properties and their defaults by examining an instance of <code class="docutils literal notranslate"><span class="pre">ia.Config</span></code>:</p>
 <div class="nbinput docutils container">
