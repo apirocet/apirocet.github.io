@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perceptron &#8212; ironArray for Python 1.0.0-beta.1 documentation</title>
+    <title>Linear Algebra &#8212; ironArray for Python 1.0.0-beta.1 documentation</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -39,6 +39,8 @@
     <link rel="shortcut icon" href="../_static/ironArray_logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Library Reference" href="../reference.html" />
+    <link rel="prev" title="Error handling" href="error-handling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
   </head>
@@ -68,7 +70,7 @@
             <a class="nav-link" href="../install.html">Installation</a>
         </li>
         
-        <li class="nav-item ">
+        <li class="nav-item active">
             <a class="nav-link" href="../tutorials.html">Tutorials</a>
         </li>
         
@@ -114,6 +116,56 @@
         
         
         
+          
+            
+                <li class="">
+                    <a href="creation.html">Getting started</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="slicing.html">Slicing Datasets and Creating Views</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="random.html">Statistical distributions</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="reductions.html">Reductions</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-memory.html">Expression Evaluation (In-Memory)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="expressions-disk.html">Expression Evaluation (On-Disk)</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="error-handling.html">Error handling</a>
+                </li>
+            
+          
+            
+                <li class="active">
+                    <a href="">Linear Algebra</a>
+                </li>
+            
+          
+        
         
         
         
@@ -128,9 +180,34 @@
           
           <div class="d-none d-xl-block col-xl-2 bd-toc">
               
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
     <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#Matrix-multiplication" class="nav-link">Matrix multiplication</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Matrix-Matrix-multiplication" class="nav-link">Matrix-Matrix multiplication</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Matrix-Vector-multiplication" class="nav-link">Matrix-Vector multiplication</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Transpose" class="nav-link">Transpose</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#Basic-example:-Neural-Networks" class="nav-link">Basic example: Neural Networks</a>
+        </li>
+    
+            </ul>
+        </li>
     
     </ul>
 </nav>
@@ -393,50 +470,162 @@ div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
 </style>
-<div class="section" id="Perceptron">
-<h1>Perceptron<a class="headerlink" href="#Perceptron" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Linear-Algebra">
+<h1>Linear Algebra<a class="headerlink" href="#Linear-Algebra" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
-<span class="kn">import</span> <span class="nn">iarray</span> <span class="k">as</span> <span class="nn">ia</span>
-<span class="kn">from</span> <span class="nn">iarray.udf</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">float64</span><span class="p">,</span> <span class="n">int64</span>
-
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
+<span></span><span class="kn">import</span> <span class="nn">iarray</span> <span class="k">as</span> <span class="nn">ia</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
+<div class="section" id="Matrix-multiplication">
+<h2>Matrix multiplication<a class="headerlink" href="#Matrix-multiplication" title="Permalink to this headline">¶</a></h2>
+<p>Matrix multiplication is a binary operation that produces a matrix from two matrices. Computing matrix products is a central operation in all computational applications of linear algebra.</p>
+<p>In this part of the tutorial we will see how matrix multiplication works in <em>ironArray</em>.</p>
+<div class="section" id="Matrix-Matrix-multiplication">
+<h3>Matrix-Matrix multiplication<a class="headerlink" href="#Matrix-Matrix-multiplication" title="Permalink to this headline">¶</a></h3>
+<p>First, we are going to create two chunked, compressed matrices using <em>ironArray</em>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">_</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">set_config</span><span class="p">(</span><span class="n">clevel</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">codec</span><span class="o">=</span><span class="n">ia</span><span class="o">.</span><span class="n">Codecs</span><span class="o">.</span><span class="n">LZ4</span><span class="p">,</span> <span class="n">nthreads</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span></span><span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+
+<span class="n">adtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">((</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">adtshape</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">chunkshape</span><span class="o">=</span><span class="n">chunkshape</span><span class="p">,</span> <span class="n">blockshape</span><span class="o">=</span><span class="n">blockshape</span><span class="p">)</span>
+
+<span class="n">bdtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">((</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bdtshape</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">chunkshape</span><span class="o">=</span><span class="n">chunkshape</span><span class="p">,</span> <span class="n">blockshape</span><span class="o">=</span><span class="n">blockshape</span><span class="p">)</span>
+
 </pre></div>
 </div>
 </div>
-<p>Create a synthetic dataset with 20000 observations and 1000 features.</p>
-<p>In addition, this dataset will form two clusters so that we can identify them with a neural network.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<p>Unlike numpy, <em>ironArray</em> performs the matrix-matrix multiplication using blocks. In this way, instead of decompressing all the data from the two arrays, we only have to decompress the data needed in each block operation (allowing larger operations with less memory).</p>
+<p>If we use the operator <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> to permorm the multiplications in Iron Array, all the params of the output array will be those defined in the global configuration.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">coord</span><span class="p">,</span> <span class="n">cl</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">cl</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span></span><span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">@</span> <span class="n">b</span>
+<span class="n">c</span><span class="o">.</span><span class="n">info</span>
 </pre></div>
 </div>
 </div>
-<p>Define de neural network class</p>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+type                : IArray
+shape               : (3000, 4000)
+chunkshape          : (2048, 2048)
+blockshape          : (128, 256)
+</pre></div></div>
+</div>
+<p>As the chunkshape and the blockshape are not defined in the global configuration, they are automatically defined in the output array.</p>
+</div>
+<div class="section" id="Matrix-Vector-multiplication">
+<h3>Matrix-Vector multiplication<a class="headerlink" href="#Matrix-Vector-multiplication" title="Permalink to this headline">¶</a></h3>
+<p><em>ironArray</em> also allows users to perform matrix-vector multiplication in the same way that matrix-matrix multiplication is performed.</p>
+<p>However, if we want to set some parameters in the out array (for example, the chunkshape and the blockshape), we must use the <code class="docutils literal notranslate"><span class="pre">ia.matmul</span></code> function to perform the multiplication.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">adtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">((</span><span class="mi">3000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">adtshape</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">))</span>
+
+<span class="n">bdtshape</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">DTShape</span><span class="p">((</span><span class="mi">5000</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bdtshape</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">250</span><span class="p">,))</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">chunkshape</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,),</span> <span class="n">blockshape</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,))</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">info</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+type                : IArray
+shape               : (3000,)
+chunkshape          : (1000,)
+blockshape          : (200,)
+</pre></div></div>
+</div>
+<p>Now, the array output has the chunkshape and the blockshape that we have specified in the <code class="docutils literal notranslate"><span class="pre">ia.matmul</span></code>function.</p>
+</div>
+<div class="section" id="Transpose">
+<h3>Transpose<a class="headerlink" href="#Transpose" title="Permalink to this headline">¶</a></h3>
+<p>In Iron Array, the transpose of an array is computed using views. It can be obtained using different methods/functions:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">at0</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span>
+<span class="n">at1</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="n">at2</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">at0</span><span class="o">.</span><span class="n">is_view</span><span class="p">(),</span> <span class="n">at1</span><span class="o">.</span><span class="n">is_view</span><span class="p">(),</span> <span class="n">at2</span><span class="o">.</span><span class="n">is_view</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(True, True, True)
+</pre></div></div>
+</div>
+<p>If we do not want a view, we just copy the transposed array.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">at</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Basic-example:-Neural-Networks">
+<h3>Basic example: Neural Networks<a class="headerlink" href="#Basic-example:-Neural-Networks" title="Permalink to this headline">¶</a></h3>
+<p>Finally, we are going to see a simple example of what we can do with the functions described above. We are going to implement an simple neural network using these functions and some other Iron Array modules like expressions or random generators.</p>
+<p>First of all, we have to generate the dataset that we use in our NN.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="n">coord</span><span class="p">,</span> <span class="n">cl</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">cl</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">training_inputs</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+<span class="n">training_labels</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">Xt</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Now, we create a class implementing a neural network with a hidden layer.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -474,7 +663,7 @@ div.rendered_html tbody tr:hover {
 
         <span class="k">return</span> <span class="n">l2_error</span><span class="p">,</span> <span class="n">l1_delta</span><span class="p">,</span> <span class="n">l2_delta</span>
 
-    <span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l1_delta</span><span class="p">,</span> <span class="n">l2_delta</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l1_delta</span><span class="p">,</span> <span class="n">l2_delta</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
         <span class="n">expr</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;w + </span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2"> * d&quot;</span>
         <span class="n">d2</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">l1</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">l2_delta</span><span class="p">)</span>
         <span class="n">d1</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">l1_delta</span><span class="p">)</span>
@@ -490,44 +679,23 @@ div.rendered_html tbody tr:hover {
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">threshold</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feed_forward</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
             <span class="n">l2_error</span><span class="p">,</span> <span class="n">l1_delta</span><span class="p">,</span> <span class="n">l2_delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backpropagation</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_weights</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l1_delta</span><span class="p">,</span> <span class="n">l2_delta</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_weights</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l1_delta</span><span class="p">,</span> <span class="n">l2_delta</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
             <span class="k">if</span><span class="p">(</span><span class="n">j</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
                 <span class="n">train_error</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ia</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">l2_error</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">())</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch </span><span class="si">{:5}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; error: </span><span class="si">{:0.4f}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">train_error</span><span class="p">))</span>
-
 </pre></div>
 </div>
 </div>
-<p>Convert numpy datasets to iarray containers.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">training_inputs</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
-<span class="n">training_labels</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">inputs</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">numpy2iarray</span><span class="p">(</span><span class="n">Xt</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<p>Create a neural network with one hidden layer.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<p>Once the NN is created, we create a NN and train it with our dataset.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">nn</span> <span class="o">=</span> <span class="n">NN</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<p>Train the neural network using the training dataset.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_inputs</span><span class="p">,</span> <span class="n">training_labels</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_inputs</span><span class="p">,</span> <span class="n">training_labels</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -536,47 +704,35 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-epoch     0 - error: 0.5119
-epoch   100 - error: 0.2496
-epoch   200 - error: 0.1940
-epoch   300 - error: 0.1679
-epoch   400 - error: 0.1546
-epoch   500 - error: 0.1458
-epoch   600 - error: 0.1401
-epoch   700 - error: 0.1340
-epoch   800 - error: 0.1306
-epoch   900 - error: 0.1267
-epoch  1000 - error: 0.1245
+epoch     0 - error: 0.5080
+epoch   100 - error: 0.1206
+epoch   200 - error: 0.1010
+epoch   300 - error: 0.0999
+epoch   400 - error: 0.0995
 </pre></div></div>
 </div>
-<p>Predict the test dataset using the fitted neural network.</p>
+<p>Finally, we predict the test part of our dataset and print the accuracy score :)</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">((</span><span class="n">labels</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+<span class="n">accuracy_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">yt</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">yt</span><span class="p">)</span>
+<span></span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
-</pre></div>
 </div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-0.8103333333333333
-</pre></div></div>
 </div>
 </div>
 
@@ -586,6 +742,8 @@ epoch  1000 - error: 0.1245
               
               <div class='prev-next-bottom'>
                 
+    <a class='left-prev' id="prev-link" href="error-handling.html" title="previous page">Error handling</a>
+    <a class='right-next' id="next-link" href="../reference.html" title="next page">Library Reference</a>
 
               </div>
               
